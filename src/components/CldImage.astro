@@ -1,0 +1,21 @@
+---
+import { Cloudinary } from '@cloudinary/url-gen';
+
+interface Props {
+	src: string;
+	width: string;
+	height: string;
+	alt: string;
+}
+
+const cld = new Cloudinary({
+	cloud: {
+		cloudName: import.meta.env.PUBLIC_CLOUDINARY_CLOUD_NAME
+	}
+});
+
+const { src, ...props } = Astro.props;
+const cldSrc = cld.image(src).setDeliveryType("fetch").toURL();
+---
+
+<img src={cldSrc} {...props} />
